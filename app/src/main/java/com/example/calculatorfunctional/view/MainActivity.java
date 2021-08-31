@@ -1,6 +1,8 @@
 package com.example.calculatorfunctional.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -10,10 +12,12 @@ import android.widget.Button;
 import com.example.calculatorfunctional.R;
 import com.example.calculatorfunctional.databinding.ActivityMainBinding;
 import com.example.calculatorfunctional.databinding.CalculatorBinding;
+import com.example.calculatorfunctional.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private CalculatorBinding binding;
+    //private MainViewModel viewModel;
     private double totalVal;
     private String currentVal;
 
@@ -23,6 +27,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binding = CalculatorBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //initialize viewModel
+        //viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
+        //viewModel.getDisplayString().observe(this, s -> binding.calculatorScreen.setText());
 
         binding.calculatorScreen.setText("onCreate working ;)");
         currentVal = "0";
@@ -59,7 +67,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //functional buttons
         if(id == R.id.ac_button) { currentVal = "0"; }
         if(id == R.id.plus_minus_button) {
-            if(currentVal.charAt(0) == '-') { currentVal = currentVal.substring(1); }
+            if(currentVal.charAt(0) == '-') {
+                if(currentVal.length() == 0) { currentVal += "0"; }
+                currentVal = currentVal.substring(1);
+            }
             else { currentVal = "-" + currentVal; }
         }
         if(currentVal.length() > 1) {
@@ -86,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(id == R.id.eight_button) { currentVal += "8"; }
         if(id == R.id.nine_button) { currentVal += "9"; }
 
+        if(currentVal.length() == 0) { currentVal += "0"; }
         updateDisplay(currentVal);
     }
 
