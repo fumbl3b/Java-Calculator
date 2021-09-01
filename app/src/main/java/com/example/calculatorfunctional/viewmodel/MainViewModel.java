@@ -92,8 +92,6 @@ public class MainViewModel extends ViewModel {
         for (int i = 0; i < calcList.size(); i++) {
             sb.append(calcList.get(i));
         }
-        Log.d("CalcList size", String.valueOf(calcList.size()));
-        Log.d("displayString", sb.toString());
         displayString.setValue(sb.toString());
     }
 
