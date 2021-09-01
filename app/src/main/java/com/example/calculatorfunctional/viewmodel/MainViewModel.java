@@ -29,8 +29,6 @@ public class MainViewModel extends ViewModel {
     // takes btn val and adjusts stack
     public void buttonPressHandler(String btn) {
 
-        Log.d("button pressed", btn);
-
         //buttons you can press with an empty list
         if (btn == "AC") {
             calcList.clear();
@@ -60,7 +58,6 @@ public class MainViewModel extends ViewModel {
 
         // buttons that require there to be something already
         if (calcList.size() > 0) {
-
             if (btn == "+/-" && lastPressIsNum) {
                 if (isNeg) {
                     calcList.add(calcList.removeLast().substring(1));
@@ -82,7 +79,6 @@ public class MainViewModel extends ViewModel {
             isDecimalPoint = true;
             lastPressIsNum = false;
         }
-
         updateDisplayString();
     }
 
