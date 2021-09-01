@@ -17,9 +17,8 @@ import com.example.calculatorfunctional.viewmodel.MainViewModel;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private CalculatorBinding binding;
-    //private MainViewModel viewModel;
-    private double totalVal;
-    private String currentVal;
+    private MainViewModel viewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +26,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binding = CalculatorBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        //initialize viewModel
-        //viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        // initialize viewModel
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         //viewModel.getDisplayString().observe(this, s -> binding.calculatorScreen.setText());
+        viewModel.getDisplayString().observe(this, s -> binding.calculatorScreen.setText(s));
 
-        binding.calculatorScreen.setText("onCreate working ;)");
-        currentVal = "0";
-        binding.calculatorScreen.setText(currentVal);
 
         binding.acButton.setOnClickListener(this);
         binding.plusMinusButton.setOnClickListener(this);
@@ -61,44 +58,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-
         int id = view.getId();
+        String buttonText = null;
 
-        //functional buttons
-        if(id == R.id.ac_button) { currentVal = "0"; }
-        if(id == R.id.plus_minus_button) {
-            if(currentVal.charAt(0) == '-') {
-                if(currentVal.length() == 0) { currentVal += "0"; }
-                currentVal = currentVal.substring(1);
-            }
-            else { currentVal = "-" + currentVal; }
-        }
-        if(currentVal.length() > 1) {
-            if(id == R.id.modulus_button) { currentVal += "%"; }
-            if(id == R.id.division_button) { currentVal += "/"; }
-            if(id == R.id.times_button) { currentVal += "x"; }
-            if(id == R.id.minus_button) { currentVal += "-"; }
-            if(id == R.id.plus_button) { currentVal += "+"; }
-            if(id == R.id.decimal_point_button) { currentVal += "."; }
-        }
+        // function buttons
+        if(id == R.id.ac_button) { buttonText = "AC"; }
+        if(id == R.id.plus_minus_button) { buttonText = "+/-";}
+        if(id == R.id.modulus_button) { buttonText = "%"; }
+        if(id == R.id.division_button) { buttonText = "/"; }
+        if(id == R.id.times_button) { buttonText = "x"; }
+        if(id == R.id.minus_button) { buttonText = "-"; }
+        if(id == R.id.plus_button) { buttonText = "+"; }
+        if(id == R.id.decimal_point_button) { buttonText = "."; }
+        if(id == R.id.equals_button) { buttonText = "="; }
 
         //value buttons
-        if (currentVal.length() >= 1 && currentVal.charAt(0) == '0') {
-            currentVal = currentVal.substring(1);
-        }
-        if (id == R.id.zero_button) { currentVal += "0"; }
-        if(id == R.id.one_button) { currentVal += "1"; }
-        if(id == R.id.two_button) { currentVal += "2"; }
-        if(id == R.id.three_button) { currentVal += "3"; }
-        if(id == R.id.four_button) { currentVal += "4"; }
-        if(id == R.id.five_button) { currentVal += "5"; }
-        if(id == R.id.six_button) { currentVal += "6"; }
-        if(id == R.id.seven_button) { currentVal += "7"; }
-        if(id == R.id.eight_button) { currentVal += "8"; }
-        if(id == R.id.nine_button) { currentVal += "9"; }
+        if (id == R.id.zero_button) { buttonText = "0"; }
+        if(id == R.id.one_button) { buttonText = "1"; }
+        if(id == R.id.two_button) { buttonText = "2"; }
+        if(id == R.id.three_button) { buttonText = "3"; }
+        if(id == R.id.four_button) { buttonText = "4"; }
+        if(id == R.id.five_button) { buttonText = "5"; }
+        if(id == R.id.six_button) { buttonText = "6"; }
+        if(id == R.id.seven_button) { buttonText = "7"; }
+        if(id == R.id.eight_button) { buttonText = "8"; }
+        if(id == R.id.nine_button) { buttonText = "9"; }
 
-        if(currentVal.length() == 0) { currentVal += "0"; }
-        updateDisplay(currentVal);
+        if(buttonText != null) { viewModel.buttonPressHandler(buttonText); };
     }
 
     public void updateDisplay(String newStr) {
