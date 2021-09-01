@@ -1,16 +1,12 @@
 package com.example.calculatorfunctional.view;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
 import com.example.calculatorfunctional.R;
-import com.example.calculatorfunctional.databinding.ActivityMainBinding;
 import com.example.calculatorfunctional.databinding.CalculatorBinding;
 import com.example.calculatorfunctional.viewmodel.MainViewModel;
 
@@ -28,8 +24,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // initialize viewModel
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
-
-        //viewModel.getDisplayString().observe(this, s -> binding.calculatorScreen.setText());
         viewModel.getDisplayString().observe(this, s -> binding.calculatorScreen.setText(s));
 
 
@@ -84,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(id == R.id.eight_button) { buttonText = "8"; }
         if(id == R.id.nine_button) { buttonText = "9"; }
 
-        if(buttonText != null) { viewModel.buttonPressHandler(buttonText); };
+        if(buttonText != null) { viewModel.buttonPressHandler(buttonText); }
     }
 
     public void updateDisplay(String newStr) {
